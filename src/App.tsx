@@ -14,7 +14,7 @@ function App() {
   const [selectedGenre, setSelectedGenre] = useState('All')
   
   // 目前的排序方式，例如價格升冪、降冪、最新發售等
-  const [sortOrder, serSortOrder] = useState('none')
+  const [sortOrder, setSortOrder] = useState('none')
   
   // 目前正在查看詳細資訊的遊戲。
   // null 代表現在沒有開啟任何遊戲的 Detail Modal。
@@ -123,7 +123,7 @@ function App() {
 
         <select
           value = {sortOrder}
-          onChange={(event) => serSortOrder(event.target.value)}
+          onChange={(event) => setSortOrder(event.target.value)}
         >
           <option value="none">Default</option>
           <option value="low">Price: Low to High</option>

@@ -35,14 +35,13 @@ export const games: Game[] = [
     description: 'A young knight begins a journey across a fallen kingdom.',
     image: finalKnightImage,
   },
-  // 後面的遊戲資料照原本保留即可
   {
     id: 2,
     title: 'Cyber Drift',
     genre: 'Racing',
     price: 1980,
     releaseDate: '2025-11-07',
-    description: 'Cyber',
+    description: 'Race through a neon city in high-speed futuristic competitions.',
     image: cyberDriftImage,
   },
   {
