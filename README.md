@@ -9,34 +9,34 @@ React / TypeScript の復習を兼ねて制作した、架空のゲームスト�
 ![Game Store Mini](./screenshots/game-store-home.png)
 
 ## 主な機能
-ゲーム一覧表示
-タイトル検索
-ジャンル絞り込み
-価格順・発売日順の並び替え
-ゲーム詳細表示
-Wishlist への追加・削除
-localStorage を使った Wishlist の保存
-レスポンシブ対応
+- ゲーム一覧表示
+- タイトル検索
+- ジャンル絞り込み
+- 価格順・発売日順の並び替え
+- ゲーム詳細表示
+- Wishlist への追加・削除
+- localStorage を使った Wishlist の保存
+- レスポンシブ対応
 
 ## 使用した技術
-React
-TypeScript
-Vite
-HTML
-CSS
-Git / GitHub
+- React
+- TypeScript
+- Vite
+- HTML
+- CSS
+- Git / GitHub
 
 制作しながら、主に以下の内容を確認しました。
 
-Component / Props
-useState / useEffect
-Event Handler
-Conditional Rendering
-map / filter / sort
-TypeScript の type、Union Type
-localStorage
-CSS Grid / Flexbox
-Responsive Design
+- Component / Props
+- useState / useEffect
+- Event Handler
+- Conditional Rendering
+- map / filter / sort
+- TypeScript の type、Union Type
+- localStorage
+- CSS Grid / Flexbox
+- Responsive Design
 
 ゲームデータは親 Component 側で管理し、Props を使って GameCard に渡しています。
 
@@ -51,8 +51,8 @@ Wishlist は localStorage に保存しているため、ページを再読み込
 カバー画像には AI で生成した画像を使用しています。
 
 ## 起動方法
-npm install
-npm run dev
+- npm install
+- npm run dev
 
 表示されたローカル URL をブラウザで開いてください。
 
