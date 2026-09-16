@@ -1,0 +1,382 @@
+/* 讓元素的 width / height 計算包含 padding 和 border，
+   排版時比較不容易因為 padding 把尺寸撐大。 */
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+
+  background:
+    radial-gradient(
+      circle at top right,
+      #240b36,
+      #0f1115 70%
+    );
+
+  color: #f5f5f5;
+}
+
+/* 頁面主容器最大寬度 1200px；
+   畫面比較窄時則使用 100% 寬度。 */
+.app {
+  width: min(1200px, 100%);
+  margin: 0 auto;
+  padding: 40px 24px 60px;
+}
+
+.app h1 {
+  margin: 0 0 8px;
+  font-size: clamp(32px, 5vw, 48px);
+}
+
+.app-subtitle {
+  margin: 0 0 32px;
+  color: #9ca3af;
+}
+
+/* Search / Filter / Sort 使用 CSS Grid 排版。
+   第一欄可伸縮，後面兩欄固定寬度。 */
+.controls {
+  display: grid;
+  /*最少 240px，但有多餘空間時可以繼續伸展。*/
+  grid-template-columns: minmax(240px, 1fr) 180px 220px;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.controls input,
+.controls select {
+  width: 100%;
+  padding: 12px 14px;
+  color: #f5f5f5;
+  background: #1a1d24;
+  border: 1px solid #30343d;
+  border-radius: 8px;
+  outline: none;
+}
+
+.controls input:focus,
+.controls select:focus {
+  border-color: #6b7280;
+}
+
+/* 一排顯示三張等寬的 Game Card。
+   minmax(0, 1fr) 可以避免內容太長時把 Grid 撐爆。 */
+.game-list {
+  display: grid;
+  /*repeat3:同樣的欄位設定重複三次。*/
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+
+/* 宣告可動畫的角度變數，讓漸層可以平滑旋轉 */
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+/* 滑鼠移到卡片上時稍微往上移，
+   transition 讓變化不會瞬間跳動。 */
+.game-card {
+  overflow: hidden;
+
+  /* 邊框本身透明，真正的顏色由 background 的第二層提供 */
+  border: 1px solid transparent;
+  border-radius: 14px;
+
+  /* 第一層是卡片背景，第二層是平常的灰色邊框 */
+  background:
+    linear-gradient(#181b21, #181b21) padding-box,
+    linear-gradient(#292d35, #292d35) border-box;
+
+  transition:
+    transform 0.5s ease;
+}
+  .game-card:hover {
+
+  background:
+    linear-gradient(#181b21, #181b21) padding-box,
+    conic-gradient(
+      from var(--angle),
+      #ff4d4d,
+      #ffd84d,
+      #6dff6d,
+      #4deaff,
+      #6d7cff,
+      #d96dff,
+      #ff4d9d,
+      #ff4d4d
+    ) border-box;
+
+  animation: rotateBorder 2.5s linear infinite;
+}
+@keyframes rotateBorder {
+  to {
+    --angle: 360deg;
+  }
+}
+
+
+  /* 固定所有遊戲封面的比例。
+    object-fit: cover 會保持圖片原比例並填滿區域，
+    超出的部分會被裁切，不會把圖片拉變形。 */
+  .game-card img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+  }
+
+  .game-card-content {
+    padding: 18px;
+  }
+
+  .game-card h2 {
+    margin: 6px 0 10px;
+    font-size: 20px;
+    line-height: 1.25;
+  }
+
+.game-genre {
+  margin: 0;
+  color: #9ca3af;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.game-release {
+  margin: 0 0 12px;
+  color: #8b929e;
+  font-size: 14px;
+}
+
+.game-price {
+  margin: 0;
+  font-size: 21px;
+  font-weight: 700;
+}
+
+/* Buttons */
+.game-card-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 18px;
+}
+/* flex: 1 讓兩個按鈕平均分配可用寬度。 */
+.game-card-actions button {
+  flex: 1;
+  padding: 10px 12px;
+  color: #f5f5f5;
+  background: #252932;
+  border: 1px solid #383d48;
+  border-radius: 8px;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+  .game-card-actions button:hover {
+    background: #333844;
+  }
+
+  .game-card-actions button:active {
+    transform: scale(0.98);
+  }
+
+
+/* fixed 讓 overlay 固定在瀏覽器畫面上。
+   inset: 0 等於 top/right/bottom/left 全部設為 0，
+   所以會完整覆蓋整個畫面。
+   z-index 控制重疊順序；
+   數字較大的元素會顯示在較上層。 */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 1000;
+}
+/* 桌機版 Detail 使用兩欄：
+   左邊固定 280px 放封面，
+   右邊 1fr 使用剩餘空間。
+   Modal 太高時限制在螢幕高度的 90%，
+   避免內容跑出畫面。 */
+.game-modal {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  width: min(760px, 100%);
+  max-height: 90vh;
+  overflow: hidden;
+  background: #181b21;
+  border: 1px solid #343945;
+  border-radius: 16px;
+}
+
+.game-modal img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.game-modal-content {
+  padding: 28px;
+}
+
+.game-modal-content h2 {
+  margin: 6px 0 16px;
+  font-size: 30px;
+}
+
+.game-modal-content > p:not(.game-genre):not(.game-release):not(.game-price) {
+  color: #c5c9d1;
+  line-height: 1.7;
+}
+
+.game-modal-content button {
+  margin-top: 20px;
+  padding: 10px 18px;
+  color: #f5f5f5;
+  background: #252932;
+  border: 1px solid #383d48;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.wishlist-button.active {
+  background: #7f1d1d;
+  border-color: #b91c1c;
+}
+
+.wishlist-button.active:hover {
+  background: #991b1b;
+}
+
+.store-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.store-label {
+  margin: 0 0 8px;
+  color: #8b929e;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+}
+
+.store-header h1 {
+  margin: 0;
+  background: linear-gradient(
+    90deg,
+    #00f2fe,
+    #4facfe
+  );
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  filter: drop-shadow(0 0 5px #00f2fe);
+}
+
+.app-subtitle {
+  margin: 8px 0 0;
+  color: #9ca3af;
+}
+/* 很大的 border-radius 可以把元素做成膠囊形狀。 */
+.game-count {
+  flex-shrink: 0;
+  padding: 8px 12px;
+  color: #c5c9d1;
+  background: #181b21;
+  border: 1px solid #30343d;
+  border-radius: 999px;
+  font-size: 14px;
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: minmax(240px, 1fr) 180px 220px;
+  gap: 12px;
+  margin-bottom: 32px;
+  padding: 14px;
+  background: #15181e;
+  border: 1px solid #272b33;
+  border-radius: 12px;
+}
+
+
+/* 平板尺寸：三欄 Game Card 改成兩欄。 */
+@media (max-width: 900px) {
+  .game-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .controls {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .controls input {
+    grid-column: 1 / -1;
+  }
+}
+/* 手機尺寸：Game Card 改成單欄，
+   controls 和 modal 也改成上下排列。 */
+@media (max-width: 600px) {
+  .app {
+    padding: 24px 16px 40px;
+  }
+
+  .controls {
+    grid-template-columns: 1fr;
+  }
+
+  .controls input {
+    grid-column: auto;
+  }
+
+  .game-list {
+    grid-template-columns: 1fr;
+  }
+
+  .game-card-actions {
+    flex-direction: column;
+  }
+
+  .game-modal {
+  grid-template-columns: 1fr;
+  max-width: 420px;
+  max-height: 90vh;
+  overflow-y: auto;
+  }
+
+  .game-modal img {
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+
+  .game-modal-content {
+    padding: 20px;
+  }
+
+  .game-modal-content h2 {
+    font-size: 24px;
+  }
+
+   .store-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
