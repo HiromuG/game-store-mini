@@ -44,8 +44,11 @@ body {
   grid-template-columns: minmax(240px, 1fr) 180px 220px;
   gap: 12px;
   margin-bottom: 32px;
+  padding: 14px;
+  background: #15181e;
+  border: 1px solid #272b33;
+  border-radius: 12px;
 }
-
 .controls input,
 .controls select {
   width: 100%;
@@ -290,10 +293,6 @@ body {
   filter: drop-shadow(0 0 5px #00f2fe);
 }
 
-.app-subtitle {
-  margin: 8px 0 0;
-  color: #9ca3af;
-}
 /* 很大的 border-radius 可以把元素做成膠囊形狀。 */
 .game-count {
   flex-shrink: 0;
@@ -305,16 +304,6 @@ body {
   font-size: 14px;
 }
 
-.controls {
-  display: grid;
-  grid-template-columns: minmax(240px, 1fr) 180px 220px;
-  gap: 12px;
-  margin-bottom: 32px;
-  padding: 14px;
-  background: #15181e;
-  border: 1px solid #272b33;
-  border-radius: 12px;
-}
 
 
 /* 平板尺寸：三欄 Game Card 改成兩欄。 */
