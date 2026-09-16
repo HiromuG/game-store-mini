@@ -4,7 +4,11 @@ React / TypeScript の復習を兼ねて制作した、架空のゲームスト�
 
 以前に React や TypeScript を学習したことがありますが、しばらく触れていなかったため、基本的な書き方やデータの流れを思い出す目的で制作しました。
 
-主な機能
+## 画面
+
+![Game Store Mini](./screenshots/game-store-home.png)
+
+## 主な機能
 ゲーム一覧表示
 タイトル検索
 ジャンル絞り込み
@@ -13,14 +17,14 @@ React / TypeScript の復習を兼ねて制作した、架空のゲームスト�
 Wishlist への追加・削除
 localStorage を使った Wishlist の保存
 レスポンシブ対応
-使用した技術
+
+## 使用した技術
 React
 TypeScript
 Vite
 HTML
 CSS
 Git / GitHub
-復習した内容
 
 制作しながら、主に以下の内容を確認しました。
 
@@ -40,19 +44,19 @@ Responsive Design
 
 Wishlist は localStorage に保存しているため、ページを再読み込みしても状態が残ります。
 
-ゲームデータについて
+## ゲームデータについて
 
 掲載しているゲーム名やゲーム情報は、この作品用に用意した架空のデータです。
 
 カバー画像には AI で生成した画像を使用しています。
 
-起動方法
+## 起動方法
 npm install
 npm run dev
 
 表示されたローカル URL をブラウザで開いてください。
 
-制作した目的
+## 制作した目的
 
 今回の作品では、React / TypeScript の基本をもう一度確認することを目的にしています。
 
